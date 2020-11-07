@@ -1,0 +1,62 @@
+**Write in front**：
+
+My phone was stuck when I copy my code to blog in CSDN  
+
+昨天晚上粘贴代码的时候手机卡了，今天试了一下又卡了，手机体验感不太好。这次换成了iPad试一下。
+
+## 实验一：二分法求f(x)根的近似值
+
+**过程：**
+1.f(x)在[a,b]内连续，若f(a)*f(b)<0,则f(x)存在根
+2.令x=(a+b)/2,判断f(a)*f(x) 与 f(x)*f(b) 哪一个为0，确定下一个二分区间。若都为0，说明两个区间都有根。
+
+**思想：**
+二分是将区间分成两部分，判断根处于哪一区间，不断进行二分，当得到的x为根，或者达到需要的精度，停止二分。
+***Matlab实现***
+**代码1:**
+(发现CSDN代码块选项中没有Matlab选项，代码不长所以贴图片吧）
+二分函数：
+![二分函数](https://img-blog.csdnimg.cn/20201107102716238.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NKWUtlZXBMZWFybmluZw==,size_16,color_FFFFFF,t_70#pic_center)
+命令框指令：
+fname = inline (‘x^2-1’);
+x=agui_bisect(fname,0,2,1e-3)
+**注：**
+代码1只得到最后结果，没有记录中间迭代过程的数值。
+
+**代码2:**
+![二分函数用矩阵记录迭代过程数值方法](https://img-blog.csdnimg.cn/20201107103852137.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NKWUtlZXBMZWFybmluZw==,size_16,color_FFFFFF,t_70#pic_center)
+
+命令框指令：
+fname =inline(‘x^2-1’);
+x=agui_disect2(fname,0,2,1e-3)
+**注：**
+代码2使用x1进行计算，将x作为矩阵用于记录迭代过程中的数值。
+
+**代码3**
+待
+
+## 实验二：牛顿迭代法求根的近似值
+
+1.初值选取(x0的选取):f(x0)•f’’(x0)>0
+2.迭代公式：x~k+1~=x~k~-f(x)/f’(x)
+***Matlab 实现:***
+**代码1:**
+![牛顿迭代，不判断初值](https://img-blog.csdnimg.cn/20201107113401667.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NKWUtlZXBMZWFybmluZw==,size_16,color_FFFFFF,t_70#pic_center)
+
+**注：**
+代码1未判断初值选取是否合适
+
+命令框指令：
+fname = inline (‘x^2-1’);
+dfname=inline (‘2x’);
+x=agui_newton(fname,dfname,0,1e-3);
+
+**代码2:**
+![牛顿迭代，判断初值](https://img-blog.csdnimg.cn/20201107114546452.jpeg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0NKWUtlZXBMZWFybmluZw==,size_16,color_FFFFFF,t_70#pic_center)
+
+命令框指令：
+fname=(‘x^2-1‘);
+x=agui_newton2(fname,1e-3)
+
+**注：**
+代码2对初值的选取是否合适进行了判断，并且不需要人工计算一阶与二阶导数。

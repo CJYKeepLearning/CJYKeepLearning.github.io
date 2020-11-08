@@ -1,0 +1,102 @@
+## 树与二叉树
+
+**实验内容：**
+建立一棵用二叉链表方式存储的二叉树，并对其进行遍历（先序、中序和后序），打印输出遍历结果。
+**基本要求：**
+从键盘接收输入先序序列，二叉链表作为存储结构，建立二叉树（以先序建立）并对其进行遍历（先序、中序、后序），然后将遍历结果打印输出。要求采用递归和非递归两种方法实现。
+**源程序：**
+
+```c
+#include<stdio.h>
+#include<stdlib.h>
+#include<malloc.h>
+
+    typedef struct Node//对结点进行结构体定义  
+    {
+        char data;
+        struct Node *LChild;
+        struct Node *RChild;
+    } BiTNode,*BiTree;
+
+    void InitTree(BiTree *l)//初始化一棵空树
+    {
+    *l= (BiTree)malloc(sizeof(BiTNode));
+    (*l)->LChild = NULL;
+    (*l)->RChild = NULL;
+    }
+
+    void CreateBiTree(BiTree *bt) //将空树创建为以先序序列读取的二叉树
+    {
+        char ch;
+        ch = getchar();
+        if (ch == ' ') *bt = NULL;
+        else
+        {
+            *bt = (BiTree)malloc(sizeof(BiTNode));
+            (*bt)->data = ch;
+            CreateBiTree(&((*bt)->LChild));
+            CreateBiTree(&((*bt)->RChild));
+        }
+    }
+
+    void PreOrder(BiTree root)//先序遍历 
+    {
+        if (root != NULL)
+        {
+            printf("%c", root->data);
+            PreOrder(root->LChild);
+            PreOrder(root->RChild);
+        }
+    }
+
+    void InOrder(BiTree root)//中序遍历 
+    {
+        if (root != NULL)
+        {
+            InOrder(root->LChild);
+            printf("%c", root->data);
+            InOrder(root->RChild);
+        }
+    }
+
+    void PostOrder(BiTree root)//后序遍历 
+    {
+        if (root != NULL)
+        {
+            PostOrder(root->LChild);
+            PostOrder(root->RChild);
+            printf("%c", root->data);
+        }
+    }
+
+    int main()
+    {
+
+        BiTree T;
+        InitTree(&T);
+        CreateBiTree(&T);
+        printf("先序序列为 ");
+        PreOrder(T);
+        printf("\n");
+        printf("中序序列为 ");
+        InOrder(T);
+        printf("\n");
+        printf("后序序列为 ");
+        PostOrder(T);
+        printf("\n");
+        system("pause");
+    }
+```
+
+**测试数据**    
+ABC[][]DE[]G[][]F[][][]  ([]表示空格字符)
+**树出结果：**
+先序序列为ABCDEFG
+中序序列为CBEGDFA
+ 后序序列为CGEFDBA
+==学习感悟：==
+1.*BiTree 是指针类型。
+2.要对树进行初始化。
+3.*l= (BiTree)malloc(sizeof(BiTNode));
+动态创建结点(BiTNode)？？？
+4.BiTree T    ？

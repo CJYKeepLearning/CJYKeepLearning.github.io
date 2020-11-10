@@ -1,31 +1,37 @@
-## 树与二叉树
-
+【题目来源】：
+数据结构-用C语言描述（耿国华第二版）P209页实习题1
 **实验内容：**
 建立一棵用二叉链表方式存储的二叉树，并对其进行遍历（先序、中序和后序），打印输出遍历结果。
-**基本要求：**
+【基本要求】：
 从键盘接收输入先序序列，二叉链表作为存储结构，建立二叉树（以先序建立）并对其进行遍历（先序、中序、后序），然后将遍历结果打印输出。要求采用递归和非递归两种方法实现。
-**源程序：**
+【测试数据】：
+ABC[][]DE[]G[][]F[][][] ([]表示空格字符)
+输出结果：先序序列为ABCDEFG
+ 中序序列为CBEGDFA
+ 后序序列为CGEFDBA
+
+**源代码**
 
 ```c
 #include<stdio.h>
 #include<stdlib.h>
 #include<malloc.h>
 
-    typedef struct Node//对结点进行结构体定义  
+    typedef struct Node//结构体  
     {
         char data;
         struct Node *LChild;
         struct Node *RChild;
     } BiTNode,*BiTree;
 
-    void InitTree(BiTree *l)//初始化一棵空树
+    void InitTree(BiTree *l)//初始化
     {
     *l= (BiTree)malloc(sizeof(BiTNode));
     (*l)->LChild = NULL;
     (*l)->RChild = NULL;
     }
 
-    void CreateBiTree(BiTree *bt) //将空树创建为以先序序列读取的二叉树
+    void CreateBiTree(BiTree *bt) //先序创建二叉树 
     {
         char ch;
         ch = getchar();
@@ -88,15 +94,7 @@
     }
 ```
 
-**测试数据**    
-ABC[][]DE[]G[][]F[][][]  ([]表示空格字符)
-**树出结果：**
-先序序列为ABCDEFG
-中序序列为CBEGDFA
- 后序序列为CGEFDBA
-==学习感悟：==
-1.*BiTree 是指针类型。
-2.要对树进行初始化。
-3.*l= (BiTree)malloc(sizeof(BiTNode));
-动态创建结点(BiTNode)？？？
-4.BiTree T    ？
+==学习疑问：==
+1.在定义结点的结构体时，*BiTree代表什么？
+2.为什么写作(BiTree *l)？
+3.为什么写作(*l)=(BiTree)malloc(sizeof(BiNode))?

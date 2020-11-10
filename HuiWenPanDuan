@@ -1,0 +1,97 @@
+**实验内容：**
+数据结构-用C语言描述（耿国华）P111实习题1
+回文判断。
+ 称正读与反读都相同的字符序列为“回文”序列。
+试写一个算法，判断依次读入的一个以@为结束符的字母序列，是否为形如“序列1&序列2”模式的字符序列。其中序列1和序列2中都不含字符“&”，且序列2时序列1的逆序列。例如，“a+b&b+a”是属于该模式的字符序列，而“1+3&3-1”则不是。
+
+```c
+#include <stdio.h>            //头文件
+#define TRUE 1            //对TRUE与FALSE进行宏定义
+#define FALSE 0
+
+/*定义栈Stack用作存放输入的字符*/
+typedef struct{ 
+    char elem[100]; 
+    int top;
+}Stack;
+
+/*预处理指令：初始化栈、入栈、出栈、判断栈是否为空*/
+void InitStack(Stack *s);
+int Push(Stack *s,char e);
+int Pop(Stack *s,char *x);
+int IsEmpty(Stack *s);
+
+/*主函数*/ 
+int main(){ 
+    Stack s;                                //定义存放输入字符栈的栈s 
+    char ch;                                //定义输入的字符为ch 
+    char temp;                            //当字符从栈中弹出时，使用temp暂存 
+    InitStack(&s);                             //初始化栈s 
+    printf("\n请输入以@为结尾的字符序列：");         //提示用户输入字符序列 
+    ch=getchar();                             //getchar单个输入字符 
+    //当ch不为字符&时，压入栈s，循环输入字符
+    while(ch!='&'){ 
+        Push(&s,ch); 
+        ch=getchar(); 
+    } 
+
+    /*当ch不为字符@并且栈s不为空时，将&后输入的字符与之前压入栈中的字符依次循环判断是否对应相等*/ 
+    do{ 
+        ch=getchar();                         //得到&后输入的字符 
+        Pop(&s,&temp);                         //将&之前压入栈s的字符出栈
+        /*如果&后新输入的字符与栈s弹出的字符不依次对应相等，输出序列1与序列2不相同，返回FALSE*/ 
+        if(ch!=temp){
+            printf("\n序列1与序列2不相同"); 
+            return(FALSE);
+        }
+     }while(ch!='@' && !IsEmpty(&s)); 
+        ch=getchar();        
+/*当栈为空时并且输入的下一个字符为@时，说明序列1与序列2相同，反之不同*/
+         if(ch=='@' && IsEmpty(&s)){ 
+        printf("\n序列1与序列2相同");
+        return(TRUE);
+    }else{ 
+        printf("\n序列1与序列2不相同"); 
+        return(FALSE); 
+    }
+}
+
+/*初始化栈*/ 
+void InitStack(Stack *s){ 
+    s->top=-1;
+}
+
+/*入栈*/ 
+int Push(Stack *s,char e){ 
+    if(s->top!=99){ 
+    (s->top)++; 
+    s->elem[s->top]=e;
+}else 
+    return (FALSE);
+}
+
+/*出栈*/ 
+int Pop(Stack *s,char *x){ 
+    if(s->top!=-1){ 
+        *x=s->elem[s->top]; 
+        s->top--;
+        return(TRUE); 
+    }else 
+        return(FALSE);
+}
+/*判断栈是否为空*/ 
+int IsEmpty(Stack *s){
+    if(s->top==-1) 
+        return(TRUE); 
+    return(FALSE);
+}
+```
+
+==学习感悟：==
+1.一开始的设置
+ Stack *s;
+ char *temp;
+ 后面的引用相应改变，但是只能在手机上运行，无法在电脑上运行，于是一直在debug，最后改成了
+ Stack s;
+ char tempt;
+后面相应使用&进行引用，但是不太清楚为什么，如果有知道同学可以告诉我一下，谢谢您！！！
